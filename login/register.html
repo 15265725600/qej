@@ -1,0 +1,105 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>企鹅街</title>
+  <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="../assets/css/qej.css">
+</head> 
+<body style="background-color: #f3f3f7">
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a
+  href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<!-- 页面内容 开发时删除 -->
+<header data-am-widget="header" class="am-header am-header-default am-no-layout" style="margin-bottom: -1px">
+    <div class="am-header-left am-header-nav">
+      <a href="javascript:history.back()" class="back">
+      </a>
+    </div>
+    <h1 class="am-header-title">找回密码</h1>
+    <div class="am-header-right am-header-nav">
+      <a href="set-pw.html" style="color: #4b4b4b">下一步</a>
+  </div>  
+</header>
+<div class="container">
+  <form class="am-form" action="" method="post">
+      <div class="login-wrap">
+          <div class="login-item">
+              <input id="phone" type="text" placeholder="请输入手机号" />
+          </div>
+      </div>
+      <div class="login-wrap">
+          <div class="login-item">
+              <input type="text" placeholder="请输入验证码" />
+              <a id="code" class="s-code" href="#" onclick="sends.send();">发送验证码</a>
+          </div>
+      </div>
+      <div class="repw">
+         <input class="mt" type="checkbox"><label>我同意<a class="text-r" style="text-decoration: underline;" href="#"> 注册协议</a></label>
+      </div>
+  </form>
+
+</div>
+
+
+<!-- 以上页面内容 开发时删除 -->
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="../assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="../assets/js/jquery.min.js"></script>
+<!--<![endif]-->
+<script src="../assets/js/amazeui.min.js"></script>
+<script src="../assets/js/qej.js"></script>
+<script type="text/javascript">
+var sends = {
+      checked:1,
+      send:function(){
+          var numbers = /^1\d{10}$/;
+          var val = $('#phone').val().replace(/\s+/g,""); //获取输入手机号码
+          if($('#code').attr('class') == 's-code'){
+            if(!numbers.test(val) || val.length ==0){
+              console.log('ok');
+              alert('请输入正确手机号');
+              return false;
+            }
+          }
+          if(numbers.test(val)){
+            var time = 60;
+            function timeCountDown(){
+              if(time==0){
+                clearInterval(timer);
+                $('#code').addClass('s-code').removeClass('s-code0').html("发送验证码");
+                sends.checked = 1;
+                return true;
+              }
+              $('#code').html("重新发送<b>"+time+"</b>S");
+
+              time--;
+              return false;
+              sends.checked = 0;
+            }
+            var content = '<p class="am-margin-bottom-0 am-padding-horizontal">验证码已发送到'+ $("#phone").val().substring(0, 3) + "****" + $("#phone").val().substring(7, 11) +'</p>'
+            $('#code').parents('.login-wrap').before(content);
+
+            $('#code').addClass('s-code0').removeClass('s-code');
+            timeCountDown();
+            var timer = setInterval(timeCountDown,1000);
+          }
+      }
+  }             
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>企鹅街</title>
+  <link rel="stylesheet" href="../assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="../assets/css/qej.css">
+</head> 
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a
+  href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<!-- 页面内容 开发时删除 -->
+<header data-am-widget="header" class="am-header am-header-default am-no-layout" style="margin-bottom: -1px">
+    <div class="am-header-left am-header-nav">
+      <a href="javascript:history.back()" class="back">
+      </a>
+    </div>
+    <h1 class="am-header-title">评价</h1>
+    <div class="am-header-right am-header-nav">
+      <a href="#" style="color: #4b4b4b">提交</a>
+  </div>  
+</header>
+<div class="container">
+    <div class="order-wrap">
+        <div class="order-hd">
+            <span>梦幻啤酒屋啊</span><span class="am-fr text-g">待评价</span>
+        </div>
+        <div class="order-bd ">
+            <div class="qe-list-item am-cf">
+                <div class="am-fl">
+                  <a href="shop.html"><img src="../assets/i/content-1.jpg" alt="梦幻啤酒屋"></a>
+                </div>
+                <div class="qe-info-wrap">
+                    <h1><a href="shop.html"> 商品名轻飘飘 </a></h1>
+                    <div class="am-text-xs"> <span class="text-g">X1</span><span class="am-fr text-red">30元</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="order-item">
+            <span class="text-g">使用红包</span><span class="am-fr">-<b>10</b>元</span>
+        </div>
+        <div class="order-item">
+            <span class="text-g">配送费</span><span class="am-fr"><b>8</b>元</span>
+        </div>
+        <div class="order-fd am-text-xs am-cf">
+            <div class="am-fr"><span class="text-g">实付：<b class="text-red"><em>28</em>元</b></span></div>
+        </div>
+    </div>
+    <form class="am-form j-submit" action="http://124.128.23.74:8008/group1/hm_qej2/index.php/indexed/replyGoods.html" method="post">
+        <dl class="order-wrap am-cf comment-star">
+           <dt class="am-fl">评价星级：</dt>
+           <dd class="am-fl am-cf am-margin-xs">
+                <i class="starg"></i>
+                <i class="starg"></i>
+                <i class="starg"></i>
+                <i class="starg"></i>
+                <i class="starg"></i>
+           </dd>
+        </dl>
+        <div class="order-wrap">
+            <label>文字评论<span class="am-text-xs">（限140字）</span>：</label>
+            <textarea rows="4" id="j-" placeholder="请填写评论"></textarea>
+        </div>
+        <div class="order-wrap">
+            <label>添加图片<span class="am-text-xs">（限4张）</span>：</label>
+            <ul class="am-svg-sm-4 upload-img">
+                <li id="upload-area">
+                    <img src="../assets/i/plus.jpg" class="j-plus">
+                </li>
+            </ul>
+            <input id="imgurl" type="hidden" name="imgurl" value="">
+        </div>
+    </form>
+    <form action="http://124.128.23.74:8008/group1/hm_qej2/index.php/index/upload.html" method="post" enctype="multipart/form-data" id="uploadfile" style="display:none;">
+        <input type="file" name="temp_file" id="iptup">
+    </form>
+</div>
+
+
+<!-- 以上页面内容 开发时删除 -->
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="../assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="../assets/js/jquery.min.js"></script>
+<!--<![endif]-->
+<script src="../assets/js/amazeui.min.js"></script>
+
+<script src="../assets/js/qej.js"></script>
+<script src="../assets/js/ajaxfileupload.js"></script>
+<script type="text/javascript">
+$(function(){
+
+    $('.comment-star i').on('click',function(){
+        $(this).removeClass('starg').addClass('starr');
+        $(this).prevAll().removeClass('starg').addClass('starr');
+        $(this).nextAll().removeClass('starr').addClass('starg');
+    });
+
+$(function(){
+    $('.j-ok').click(function ()
+        {
+            if($('.j-content').val()=="")
+            {
+                alert("请填写评价内容");
+                return false;
+            }
+            //图片路径转换
+            var imgurl='';
+            $(".upload-img li[class='real-li']").each(function(){
+                imgurl =imgurl+$(this).attr("data-imgs")+',';
+            });
+            if(imgurl){
+                imgurl=imgurl.substring(0,imgurl.length-1);//去除最后一个字符
+                $('#imgurl').val(imgurl);//图片路径放置到表单中
+            }
+
+
+            $('.j-submit').submit();
+        });
+        //绑定图片删除
+        $(document).on('click','.choosed-del',function(){
+            $(this).parent().remove();
+            if($(".upload-img li").length<5)
+                $('#upload-area').show();
+        });
+        //上传图片
+
+        $(document).on('click','.j-plus',function(){
+            uploadfile();
+        });
+
+});
+
+
+    function uploadfile(){
+
+        var file=$('#iptup');
+        var ua = window.navigator.userAgent.toLowerCase();
+        // if ((ua.indexOf('iphone') != -1)) {
+        //     file.click(); //不知为何，苹果需要2次click
+        // }
+        file.click();
+        file.change(function() {
+            var filepath=file.val();
+            var filesize=file.get(0).files[0].size;
+            filesize=(Math.round(filesize * 100 / (1024 * 1024)) / 100).toString();//转换成MB
+            var extStart=filepath.lastIndexOf(".");
+            var ext=filepath.substring(extStart,filepath.length).toUpperCase();
+            if(ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG"){
+                alert("图片限于JPG,PNG,GIF格式");
+                return false;
+            }
+            if(filesize>10){
+                alert("上传的文件大小不能超过10M！");
+                return false;
+            }
+           // $('#my-modal-loading').modal();
+            ajaxFileUpload();
+        })
+    }
+
+    function ajaxFileUpload(){
+        $.ajaxFileUpload
+        (
+                {
+                    url: "http://localhost/hm_chen/hm_qej/upload.php", //用于文件上传的服务器端请求地址
+                    secureuri: false, //是否需要安全协议，一般设置为false
+                    fileElementId: 'iptup', //文件上传域的ID
+                   dataType: 'json', //返回值类型 一般设置为json
+                    success: function (data, status)  //服务器成功响应处理函数
+                    {
+                        //追加图片内容
+                        if(data.imgurl){
+                            //显示图片
+                            var shtml='<li class="real-li" data-imgs="'+data.imgurl+'|'+data.imgurlbig+'">'+
+                                    '<img src="'+ data.imgurl +'">'+
+                                    '<img class="choosed-del" src="../assets/i/del-pic.png">'+
+                                    '</li>';
+//                            console.log(shtml);
+                            $('#upload-area').before(shtml);
+                            if($(".upload-img li").length>=5)
+                                $('#upload-area').hide();
+                        }
+                        //$('#my-modal-loading').modal('close');
+                    },
+                    error: function (data, status, e)//服务器响应失败处理函数
+                    {
+                      console.log(e);
+                      console.log(status);
+                        alert("上传失败，请重新上传");
+                    }
+                }
+        )
+        return;
+    }
+
+</script>
+</body>
+</html>
